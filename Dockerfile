@@ -1,4 +1,4 @@
-FROM docker:1.10.2-git
+FROM docker:1.10.3-git
 RUN apk update
 RUN apk upgrade
 RUN apk add ca-certificates
