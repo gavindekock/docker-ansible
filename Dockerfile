@@ -20,5 +20,4 @@ libffi-dev
 RUN curl -L https://bootstrap.pypa.io/get-pip.py -o /usr/local/bin/get-pip.py
 RUN python /usr/local/bin/get-pip.py
 
-RUN pip install pywinrm boto markupsafe jinja2 docker-py cryptography ansible awscli
-
+RUN pip install pywinrm boto boto3 markupsafe jinja2 docker-py cryptography ansible awscli
