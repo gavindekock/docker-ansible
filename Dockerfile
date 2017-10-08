@@ -1,8 +1,8 @@
-FROM docker:stable-git
+FROM docker:rc-git
 
 ENV DOCKER_MACHINE_BUCKET github.com/docker/machine/releases/download
 ENV DOCKER_MACHINE_VERSION v0.12.2
-ENV DOCKER_MACHINE_SHA256 56f1e04811e21e972c44ca9b1d0a78784764646fedab3858c6239fcbaac4c87d
+ENV DOCKER_MACHINE_SHA256 3c0a1a03653dff205f27bb178773f3c294319435a2589cf3cb4456423f8cef08
 
 RUN set -ex \
 && apk add --no-cache libcurl curl 
@@ -26,3 +26,9 @@ RUN curl -L https://bootstrap.pypa.io/get-pip.py -o /usr/local/bin/get-pip.py
 RUN python /usr/local/bin/get-pip.py
 
 RUN pip install pywinrm boto boto3 markupsafe jinja2 docker-py cryptography ansible awscli
+
+RUN docker --version \
+&& docker-machine --version \
+&& python --version \
+&& aws --version \
+&& ansible --version
