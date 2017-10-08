@@ -1,17 +1,20 @@
 FROM docker:stable-git
 
 ENV DOCKER_MACHINE_BUCKET github.com/docker/machine/releases/download
-ENV DOCKER_MACHINE_VERSION v0.10.0
-ENV DOCKER_MACHINE_SHA256 74f77385f6744fb83ec922b206f39b4c33ac42e63ed09d4d63652741d8a94df9
+ENV DOCKER_MACHINE_VERSION v0.12.2
+ENV DOCKER_MACHINE_SHA256 56f1e04811e21e972c44ca9b1d0a78784764646fedab3858c6239fcbaac4c87d
 
-RUN set -x \
-	&& curl -fSL "https://${DOCKER_MACHINE_BUCKET}/${DOCKER_MACHINE_VERSION}/docker-machine-Linux-X86_64" -o docker-machine \
-	&& echo "${DOCKER_MACHINE_SHA256}  docker-machine" | sha256sum -c - \
-	&& mv docker-machine /usr/local/bin/ \
-	&& chmod +x /usr/local/bin/docker-machine \
-	&& docker-machine -v
+RUN set -ex \
+&& apk add --no-cache --virtual .fetch-deps curl
 
-RUN apk --no-cache add python \ 
+RUN set -ex \
+&& curl -fSL "https://${DOCKER_MACHINE_BUCKET}/${DOCKER_MACHINE_VERSION}/docker-machine-`uname -s`-`uname -m`" -o docker-machine \
+&& echo "${DOCKER_MACHINE_SHA256}  docker-machine" | sha256sum -c - \
+&& mv docker-machine /usr/local/bin/ \
+&& chmod +x /usr/local/bin/docker-machine \
+&& docker-machine -v
+
+RUN apk add --no-cache --virtual .fetch-deps python \ 
 python-dev \
 libxml2-dev \
 alpine-sdk \
